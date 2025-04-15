@@ -25,6 +25,42 @@ const SummaryApi = {
     updateUser :{
         url :`${backendDomain}/api/update-user`,
         method:"post"
+    },
+    uploadProduct:{
+        url:`${backendDomain}/api/upload-product`,
+        method:"post"
+    },
+    allProduct:{
+        url:`${backendDomain}/api/get-product`,
+        method:"get"
+    },
+    updateProduct:{
+        url:`${backendDomain}/api/update-product`,
+        method:"post"
+    },
+    categoryProduct:{
+        url:`${backendDomain}/api/get-categoryProduct`,
+        method:"get"
+    },
+    categoryWiseProduct:{
+        url:`${backendDomain}/api/category-product`,
+        method:"post"
+    },
+    ProductDetails : {
+        url : `${backendDomain}/api/product-details`,
+        method : "post"
+    },
+    addToCartProduct : {
+        url : `${backendDomain}/api/addtocart`,
+        method : "post"
+    },
+    addToCartProductCount : {
+        url : `${backendDomain}/api/countAddToCartProduct`,
+        method : "get"
+    },
+    addToCartProductView : {
+        url : `${backendDomain}/api/view-cart-product`,
+        method : 'get'
     }
 }
 

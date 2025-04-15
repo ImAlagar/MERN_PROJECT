@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { IoClose } from "react-icons/io5";
+import React,{useState} from 'react'
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
@@ -7,23 +6,24 @@ import DisplayImage from './DisplayImage';
 import { MdDelete } from "react-icons/md";
 import SummaryApi from '../common';
 import {toast} from 'react-toastify'
+import { IoClose } from "react-icons/io5";
 
-const UploadProducts = (
-   {
+
+const AdminEditProduct = ({
     onClose,
+    productData,
     fetchData
-  }
-) => {
-
+}) => {
+   
     const [data,setData] = useState({
-
-        productName:"",
-        brandName:"",
-        category:"",
-        productImage:[],
-        description:"",
-        price:"",
-        sellingPrice:"",
+        ...productData,
+        productName:productData?.productName,
+        brandName:productData?.brandName,
+        category:productData?.category,
+        productImage:productData?.productImage || [],
+        description:productData?.description,
+        price:productData?.price,
+        sellingPrice:productData?.sellingPrice,
 
     })
 
@@ -87,8 +87,8 @@ const handleSubmit = async(e)=>{
 
   // console.log("data",data);
 
-  const response = await fetch(SummaryApi.uploadProduct.url,{
-    method:SummaryApi.uploadProduct.method,
+  const response = await fetch(SummaryApi.updateProduct.url,{
+    method:SummaryApi.updateProduct.method,
     credentials:'include',
     headers:{
       "content-type":"application/json"
@@ -110,11 +110,12 @@ const handleSubmit = async(e)=>{
 
 }
 
+
   return (
     <div className=' fixed bg-slate-200 bg-opacity-35 w-full h-full top-0 left-0 right-0 bottom-0 flex justify-center items-center '>
         <div className='bg-white p-4 rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden'>
             <div className='flex justify-between items-center pb-3'>
-               <h2 className=' font-bold text-lg'>Upload product</h2>
+               <h2 className=' font-bold text-lg'>Edit product</h2>
                <div className='w-fit cursor-pointer ml-auto text-2xl hover:text-red-600' onClick={onClose}>
                  <IoClose />
                </div>
@@ -243,11 +244,12 @@ const handleSubmit = async(e)=>{
 
                <label htmlFor="description" className='mt-3'> Description :</label>
                <textarea 
-                 rows={3} 
-                 className='h-28 bg-slate-200 border p-2'placeholder='Enter product description' 
-                 value={data.description}
+                 rows={3}  
+                 className='h-28 bg-slate-200 border p-2'
+                 placeholder='Enter product description' 
                  name='description'
-                 onChange={handleOnChange}      
+                 value={data.description}
+                 onChange={handleOnChange}  
                 >
                   
 
@@ -255,7 +257,7 @@ const handleSubmit = async(e)=>{
 
 
 
-                <button className='px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700 '>Upload Product</button>          
+                <button className='px-3 py-2 bg-red-600 text-white mb-10 hover:bg-red-700 '>Update Product</button>          
             </form>
           
 
@@ -271,4 +273,4 @@ const handleSubmit = async(e)=>{
   )
 }
 
-export default UploadProducts
+export default AdminEditProduct

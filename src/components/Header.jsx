@@ -1,14 +1,15 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common";
 import {toast} from 'react-toastify'
 
 import {setUserDetails} from '../store/userSlice'
 import ROLE from "../common/role";
+import Context from "../context";
  
 const Header = () => {
 
@@ -16,8 +17,12 @@ const Header = () => {
   // console.log("userheader",user);
 
   const dispatch = useDispatch()
+
  
   const [menuDisplay, setMenuDisplay] = useState(false);
+
+  const context = useContext(Context)
+  const navigate = useNavigate()
 
 
   const handleLogout = async()=>{
@@ -31,6 +36,7 @@ const Header = () => {
   if(data.success){
     toast.success(data.message)
     dispatch(setUserDetails(null))
+    navigate("/")
   }
 
   if(data.error){
@@ -39,10 +45,12 @@ const Header = () => {
 
   }
 
+  console.log("header add to cart count", context);
+
   return (
-    <header className="h-16 shadow-md bg-white">
+    <header className="h-16 shadow-md bg-white fixed w-full z-40">
         <div className= " h-full container  mx-auto flex items-center px-4 justify-between">
-           <div>
+           <div>  
               <Link to={"/"}>
                 MERN
               </Link>
@@ -95,17 +103,17 @@ const Header = () => {
 
              </div>
 
-              
-            
-             
-              <div className="text-2xl relative">
-                <span><FaCartShopping /></span>
-               
-               <div className="bg-red-600 text-white h-5 w-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3">
-                 <p className="text-xs"> 0</p>
-               </div>
-                 
-              </div>
+            {
+               user?._id && (
+                <Link to={"/cart"} className='text-2xl relative'>
+                    <span><FaCartShopping/></span>
+
+                    <div className='bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-3'>
+                        <p className='text-sm'>{context?.cartProductCount}</p>
+                    </div>
+                </Link>
+                )
+            }
 
               <div>
                 
